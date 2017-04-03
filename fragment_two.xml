@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Spinner
+        style="@style/Spinner"
+        android:id="@+id/spinner_arvr"
+        android:spinnerMode="dropdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:popupBackground="@null"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="2.5dp"
+        />
+    <Spinner
+        style="@style/Spinner"
+        android:id="@+id/spinner_app_cat"
+        android:spinnerMode="dropdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:popupBackground="@null"
+        android:layout_alignTop="@+id/spinner_arvr"
+        android:layout_toEndOf="@+id/spinner_arvr"
+        android:dropDownSelector="@drawable/spinner_selector"
+        />
+    <Spinner
+        style="@style/Spinner"
+        android:spinnerMode="dropdown"
+        android:id="@+id/spinner_app_sub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/spinner_app_cat"
+        android:layout_toEndOf="@+id/spinner_app_cat"
+        android:dropDownSelector="@drawable/spinner_selector"/>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/card_recycler_view"
+        android:background="#fffff0"
+        android:scrollbars="none"
+        android:layout_width="320dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"/>
+
+ <!--   <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/gridviewapps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="1"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
+        android:layout_below="@id/spinner_cat"
+        android:layout_marginTop="40dp"
+        />-->
+
+</RelativeLayout>

@@ -1,0 +1,54 @@
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="275dp"
+    card_view:cardElevation="20dp"
+    android:id="@+id/card"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="10dp"
+    card_view:cardCornerRadius="30dp">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/header_txt"
+            android:textColor="@color/colorBlack"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:textSize="24sp"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"/>
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="260dp"
+        android:layout_height="180dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="25dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/lakeaustin"  />
+
+    <TextView
+        android:id="@+id/footer_txt"
+        android:layout_width="260dp"
+        android:layout_height="26dip"
+        android:gravity="center"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:textColor="#ffffff"
+        android:background="@color/colorPrimary"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="5secs"
+        android:textSize="14sp" />
+
+
+
+</android.support.v7.widget.CardView>

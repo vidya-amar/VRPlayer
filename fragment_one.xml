@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        style="@style/Spinner"
+        android:id="@+id/spinner_cat"
+        android:spinnerMode="dropdown"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:popupBackground="@null"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="10dp"
+        />
+    <Spinner
+        style="@style/Spinner"
+        android:spinnerMode="dropdown"
+        android:id="@+id/spinner_sub"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/spinner_cat"
+        android:layout_toEndOf="@+id/spinner_cat"
+        android:dropDownSelector="@drawable/spinner_selector"/>
+
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="1"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:verticalSpacing="0dp"
+        android:horizontalSpacing="0dp"
+        android:layout_below="@id/spinner_cat"
+        android:layout_marginTop="20dp"
+        />
+
+</RelativeLayout>
