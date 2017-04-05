@@ -59,7 +59,8 @@ public class TwoFragment extends Fragment {
             vrAge1Sub1,vrAge1Sub2,vrAge1Sub3,vrAge2Sub1,vrAge2Sub2,vrAge2Sub3,
             vrAge3Sub1,vrAge3Sub2,vrAge3Sub3,vrAge3Sub4,vrAge4Sub1,vrAge4Sub2,vrAge4Sub3;
     private ArrayList footerArraylist,headerArraylist,imageUrllist;
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView,recyclerView1;
+    DataAdapter myadapter;
     // newInstance constructor for creating fragment with arguments
     public static TwoFragment newInstance(int page, String title) {
         TwoFragment fragmentTwo = new TwoFragment();
@@ -82,6 +83,15 @@ public class TwoFragment extends Fragment {
         inflater.inflate( R.menu.menu_main, menu);
        // final SearchAdapter adapter=new SearchAdapter(getActivity().getApplicationContext(), getVideos());
         myActionMenuItem = menu.findItem( R.id.action_search);
+        recyclerView1 = (RecyclerView) getView().findViewById(R.id.card_recycler_view);
+        recyclerView1.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerView1.setLayoutManager(layoutManager);
+        myadapter=new DataAdapter(getActivity().getApplicationContext(),data);
+        recyclerView1.setAdapter(myadapter);
+
+        /*final RecyclerView.Adapter adapter = new AppSearchDataAdapter(getActivity().getApplicationContext(),data);
+        recyclerView.setAdapter(adapter);*/
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -89,15 +99,29 @@ public class TwoFragment extends Fragment {
        int id = item.getItemId();
         if (id == R.id.action_search) {
             searchFlag=1;
-            final RecyclerView.Adapter adapter = new DataAdapter(getActivity().getApplicationContext(),data);
-            recyclerView.setAdapter(adapter);
+            myadapter=new DataAdapter(getActivity().getApplicationContext(),data);
+            recyclerView1.setAdapter(myadapter);
+            recyclerView1.addOnItemTouchListener(
+                    new DataAdapter(getActivity(), new   DataAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            // TODO Handle item click
+                            // recyclerView.invalidate();
+                            // recyclerView.getAdapter().notifyDataSetChanged();
+                            long index=recyclerView.getAdapter().getItemId(position);
+                            int indexInt = (int)index;
+                            Toast.makeText(getActivity().getApplicationContext(),"At last success ...index="+String.valueOf(index).toString(),Toast.LENGTH_SHORT).show();
+                            //Log.e("@@@@@",""+position);
+                            displayUrl(indexInt);
+                        }
+                    })
+            );
+
             searchView = (SearchView) myActionMenuItem.getActionView();
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                   // recyclerView.getAdapter().filter(query);
-                   //adapter.getFilter().filter(query);
-                    //Toast.makeText(getActivity().getApplicationContext(), "SearchOnQueryTextSubmit: " + query, Toast.LENGTH_LONG).show();
+                    myadapter.getFilter().filter(query);
                     if( ! searchView.isIconified()) {
                         searchView.setIconified(true);
                     }
@@ -106,9 +130,6 @@ public class TwoFragment extends Fragment {
                 }
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                   // adapter.filter(data,newText);
-                    // adapter.getFilter().filter(s);
-                    // Toast.makeText(getActivity().getApplicationContext(),  "SearchOnQueryTextChanged: " + s, Toast.LENGTH_LONG).show();
                     return false;
                 }
             });
@@ -197,338 +218,10 @@ public class TwoFragment extends Fragment {
                         int indexInt = (int)index;
                         //Toast.makeText(getActivity().getApplicationContext(),"At last index="+String.valueOf(index).toString(),Toast.LENGTH_SHORT).show();
                         //Log.e("@@@@@",""+position);
-                        switch(indexInt){
-
-                            case 0:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.heart.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 1:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.bloodcirculation.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 2:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.digestivesystem.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 3:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.spine.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 4:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.biogas_plant.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 5:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.thermal_power_station.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 6:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.escapistgames.starchart"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 7:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.earth_in_solar_system.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 8:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.LunarExGames.myARgalaxySolarSystem"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 9:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.femalerepsys.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 10:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.malerepsys.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 11:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.spermstructure.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 12:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.fetus.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 13:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.electriccircuit.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 14:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.virtualSpeech.android.language"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 15:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.mattel.vmdestinations"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 16:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1096173157163965/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 17:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.frag.vrvolcanoflythrough"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 18:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1130312973723945/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 19:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.google.vr.expeditions"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 20:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.discovery.DiscoveryVR"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 21:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.Einpictures.SeaWorldVR"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 22:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.sculfa.vroceanaquarium"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 23:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.arloopa.zoo"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 24:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.wrf.zoo.adventure.animal.apps"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 25:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.AaronKnobloch.SpaceSimVR"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 26:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.PYOPYO.StarTrackerVR"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 27:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.azamoka.inbody_vr"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 28:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.rendernet.bacteria"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 29:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.sculfa.vrmoonwalk3d"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 30:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.ThomasKole.Apollo15VR"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 31:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.onepixelsoft.solarsystemcb"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 32:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.drashvr.titansofspacecb"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 33:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.einpictures.SpaceWorldVR"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 34:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.mattel.viewmasterspace"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 35:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/886577898031804/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 36:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=kr.IllusicSoft.VRSpaceAdventure"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 37:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/817920331578674/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 38:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=net.vrforce.vr.mars"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 39:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1061939523887646/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 40:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.mattel.vmnatgeowildlife"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 41:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1095228957166724/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 42:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1102239349818336/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 43:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/820253268102944/"));//https://www.oculus.com/experiences/gear-vr/839109046206257/
-
-                                startActivity(intentAppUrl);
-                                break;
-                            case 44:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/957887340986022/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 45:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/908477449239883/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 46:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1045550998808912/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 47:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.virtualSpeech.android"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 48:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1129567930394285/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 49:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.nivalvr.inmind"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 50:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.nivalvr.incell"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 51:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1249878741704255/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 52:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/839109046206257/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 53:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1192938717388849/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 54:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/772273116219706/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 55:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1015802351839289/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 56:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/890452791032257/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 57:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1037345173060965/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 58:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1148894061844063/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 59:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1533717109978548/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 60:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1290835750988761/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 61:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1039691276148629/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 62:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1059383670741232/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 63:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1096173157163965/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 64:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/771250866318951/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 65:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1084090091622343/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 66:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/684014421708964/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 67:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1073856559366835/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 68:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.Meritnation.PeriodicTable"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 69:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.arloopa.chemistryvr"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 70:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1111432215631156/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 71:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1327971593879954/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 72:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/869485659814410/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 73:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1130312973723945/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 74:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/742896805825051/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 75:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.AppMinded.MoleculeVR"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 76:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.rendernet.humanmale"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 77:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.rendernet.hearing"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 78:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.rendernet.ottoengine"));
-                                startActivity(intentAppUrl);
-                                break;
-                            case 79:
-                                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/914641785316114/"));
-                                startActivity(intentAppUrl);
-                                break;
-                            default:
-                                break;
-
-
-                        }
+                        displayUrl(indexInt);
                     }
                 })
         );
-
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             GestureDetector gestureDetector = new GestureDetector(getActivity().getApplicationContext(), new GestureDetector.SimpleOnGestureListener() {
 
@@ -559,6 +252,336 @@ public class TwoFragment extends Fragment {
 
             }
         });
+    }
+    public void displayUrl(int index){
+        switch(index){
+
+            case 0:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.heart.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 1:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.bloodcirculation.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 2:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.digestivesystem.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 3:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.spine.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 4:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.biogas_plant.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 5:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.thermal_power_station.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 6:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.escapistgames.starchart"));
+                startActivity(intentAppUrl);
+                break;
+            case 7:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.earth_in_solar_system.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 8:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.LunarExGames.myARgalaxySolarSystem"));
+                startActivity(intentAppUrl);
+                break;
+            case 9:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.femalerepsys.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 10:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.malerepsys.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 11:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.spermstructure.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 12:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.fetus.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 13:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.electriccircuit.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 14:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.virtualSpeech.android.language"));
+                startActivity(intentAppUrl);
+                break;
+            case 15:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.mattel.vmdestinations"));
+                startActivity(intentAppUrl);
+                break;
+            case 16:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1096173157163965/"));
+                startActivity(intentAppUrl);
+                break;
+            case 17:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.frag.vrvolcanoflythrough"));
+                startActivity(intentAppUrl);
+                break;
+            case 18:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1130312973723945/"));
+                startActivity(intentAppUrl);
+                break;
+            case 19:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.google.vr.expeditions"));
+                startActivity(intentAppUrl);
+                break;
+            case 20:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.discovery.DiscoveryVR"));
+                startActivity(intentAppUrl);
+                break;
+            case 21:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.Einpictures.SeaWorldVR"));
+                startActivity(intentAppUrl);
+                break;
+            case 22:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.sculfa.vroceanaquarium"));
+                startActivity(intentAppUrl);
+                break;
+            case 23:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.arloopa.zoo"));
+                startActivity(intentAppUrl);
+                break;
+            case 24:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.wrf.zoo.adventure.animal.apps"));
+                startActivity(intentAppUrl);
+                break;
+            case 25:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.AaronKnobloch.SpaceSimVR"));
+                startActivity(intentAppUrl);
+                break;
+            case 26:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.PYOPYO.StarTrackerVR"));
+                startActivity(intentAppUrl);
+                break;
+            case 27:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.azamoka.inbody_vr"));
+                startActivity(intentAppUrl);
+                break;
+            case 28:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.rendernet.bacteria"));
+                startActivity(intentAppUrl);
+                break;
+            case 29:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.sculfa.vrmoonwalk3d"));
+                startActivity(intentAppUrl);
+                break;
+            case 30:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.ThomasKole.Apollo15VR"));
+                startActivity(intentAppUrl);
+                break;
+            case 31:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.onepixelsoft.solarsystemcb"));
+                startActivity(intentAppUrl);
+                break;
+            case 32:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.drashvr.titansofspacecb"));
+                startActivity(intentAppUrl);
+                break;
+            case 33:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.einpictures.SpaceWorldVR"));
+                startActivity(intentAppUrl);
+                break;
+            case 34:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.mattel.viewmasterspace"));
+                startActivity(intentAppUrl);
+                break;
+            case 35:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/886577898031804/"));
+                startActivity(intentAppUrl);
+                break;
+            case 36:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=kr.IllusicSoft.VRSpaceAdventure"));
+                startActivity(intentAppUrl);
+                break;
+            case 37:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/817920331578674/"));
+                startActivity(intentAppUrl);
+                break;
+            case 38:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=net.vrforce.vr.mars"));
+                startActivity(intentAppUrl);
+                break;
+            case 39:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1061939523887646/"));
+                startActivity(intentAppUrl);
+                break;
+            case 40:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.mattel.vmnatgeowildlife"));
+                startActivity(intentAppUrl);
+                break;
+            case 41:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1095228957166724/"));
+                startActivity(intentAppUrl);
+                break;
+            case 42:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1102239349818336/"));
+                startActivity(intentAppUrl);
+                break;
+            case 43:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/820253268102944/"));//https://www.oculus.com/experiences/gear-vr/839109046206257/
+
+                startActivity(intentAppUrl);
+                break;
+            case 44:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/957887340986022/"));
+                startActivity(intentAppUrl);
+                break;
+            case 45:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/908477449239883/"));
+                startActivity(intentAppUrl);
+                break;
+            case 46:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1045550998808912/"));
+                startActivity(intentAppUrl);
+                break;
+            case 47:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.virtualSpeech.android"));
+                startActivity(intentAppUrl);
+                break;
+            case 48:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1129567930394285/"));
+                startActivity(intentAppUrl);
+                break;
+            case 49:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.nivalvr.inmind"));
+                startActivity(intentAppUrl);
+                break;
+            case 50:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.nivalvr.incell"));
+                startActivity(intentAppUrl);
+                break;
+            case 51:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1249878741704255/"));
+                startActivity(intentAppUrl);
+                break;
+            case 52:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/839109046206257/"));
+                startActivity(intentAppUrl);
+                break;
+            case 53:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1192938717388849/"));
+                startActivity(intentAppUrl);
+                break;
+            case 54:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/772273116219706/"));
+                startActivity(intentAppUrl);
+                break;
+            case 55:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1015802351839289/"));
+                startActivity(intentAppUrl);
+                break;
+            case 56:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/890452791032257/"));
+                startActivity(intentAppUrl);
+                break;
+            case 57:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1037345173060965/"));
+                startActivity(intentAppUrl);
+                break;
+            case 58:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1148894061844063/"));
+                startActivity(intentAppUrl);
+                break;
+            case 59:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1533717109978548/"));
+                startActivity(intentAppUrl);
+                break;
+            case 60:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1290835750988761/"));
+                startActivity(intentAppUrl);
+                break;
+            case 61:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1039691276148629/"));
+                startActivity(intentAppUrl);
+                break;
+            case 62:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1059383670741232/"));
+                startActivity(intentAppUrl);
+                break;
+            case 63:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1096173157163965/"));
+                startActivity(intentAppUrl);
+                break;
+            case 64:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/771250866318951/"));
+                startActivity(intentAppUrl);
+                break;
+            case 65:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1084090091622343/"));
+                startActivity(intentAppUrl);
+                break;
+            case 66:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/684014421708964/"));
+                startActivity(intentAppUrl);
+                break;
+            case 67:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1073856559366835/"));
+                startActivity(intentAppUrl);
+                break;
+            case 68:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.Meritnation.PeriodicTable"));
+                startActivity(intentAppUrl);
+                break;
+            case 69:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.arloopa.chemistryvr"));
+                startActivity(intentAppUrl);
+                break;
+            case 70:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1111432215631156/"));
+                startActivity(intentAppUrl);
+                break;
+            case 71:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1327971593879954/"));
+                startActivity(intentAppUrl);
+                break;
+            case 72:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/869485659814410/"));
+                startActivity(intentAppUrl);
+                break;
+            case 73:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/1130312973723945/"));
+                startActivity(intentAppUrl);
+                break;
+            case 74:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/742896805825051/"));
+                startActivity(intentAppUrl);
+                break;
+            case 75:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.AppMinded.MoleculeVR"));
+                startActivity(intentAppUrl);
+                break;
+            case 76:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.rendernet.humanmale"));
+                startActivity(intentAppUrl);
+                break;
+            case 77:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.rendernet.hearing"));
+                startActivity(intentAppUrl);
+                break;
+            case 78:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.rendernet.ottoengine"));
+                startActivity(intentAppUrl);
+                break;
+            case 79:
+                intentAppUrl = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.oculus.com/experiences/gear-vr/914641785316114/"));
+                startActivity(intentAppUrl);
+                break;
+            default:
+                break;
+
+
+        }
     }
     public void addItemsToSpinnerarvr() {
 
